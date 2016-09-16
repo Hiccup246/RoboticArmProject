@@ -1,6 +1,7 @@
 # RoboticArmProject
 
 Team: WestScenario
+
 Members: James Watt, Ben percy, Raven apiata
 
 Goals:

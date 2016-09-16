@@ -124,18 +124,18 @@ public class Arm
    public void directKinematic(){
        
        // midpoint between joints
-       //double  xa =.... ;
-       //double  ya =.... ;
+       double  xa =xm2+0.5*(xm1-xm2) ;
+       double  ya =ym2+0.5*(ym1-ym2) ;
        // distance between joints
-       //double d = ...;
+       double d = Math.sqrt(((xm1-xm2)^2)((ym1-ym2)^2));
        if (d<2*r){
            valid_state = true;
          // half distance between tool positions
-         //double  h = ...;
+         double  h = Math.sqrt((r^2)-((0.5*d)^2));
          //double alpha= ...;
          // tool position
-        // double xt = ...;
-        // double yt = ...;
+         //double xt = xa+h*cos(pie/2-alpha);      i added these in,not completed not sure about alpha(james)
+         //double yt = ya+h*sin(pie/2-alpha;       i added these in, not completed not sure about alpha(james)
          //  xt2 = xa - h.*cos(alpha-pi/2);
          //  yt2 = ya - h.*sin(alpha-pi/2);
        } else {

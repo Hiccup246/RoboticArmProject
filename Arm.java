@@ -132,12 +132,12 @@ public class Arm
            valid_state = true;
          // half distance between tool positions
          double  h = Math.sqrt((r^2)-((0.5*d)^2));
-         //double alpha= ...;
+         double alpha= Math.atan((yj1-yj2)/(xj2-xj1))
          // tool position
-         //double xt = xa+h*cos(pie/2-alpha);      i added these in,not completed not sure about alpha(james)
-         //double yt = ya+h*sin(pie/2-alpha;       i added these in, not completed not sure about alpha(james)
-         //  xt2 = xa - h.*cos(alpha-pi/2);
-         //  yt2 = ya - h.*sin(alpha-pi/2);
+         double xt = xa+h*cos(pie/2-alpha);      i added these in,not completed not sure about alpha(james)
+         double yt = ya+h*sin(pie/2-alpha;       i added these in, not completed not sure about alpha(james)
+           xt2 = xa - h.*cos(alpha-pi/2);
+           yt2 = ya - h.*sin(alpha-pi/2);
        } else {
            valid_state = false;
         }
@@ -165,17 +165,17 @@ public class Arm
         double l1 = d1/2;
         double h1 = Math.sqrt(r*r - d1*d1/4);
         // elbows positions
-        //xj1 = ...;
-        //yj1 = ...;
+        xj1 = xa+h*cos(theta);
+        yj1 = ya+h*sin(theta);
 
-        ///theta1 = ...;
-        if ((theta1>0)||(theta1<-Math.PI)){
+        theta1 = Math.atan2(yj1-ym2,xj1-xm2);
+           if ((theta1>0)||(theta1<-Math.PI)){
             valid_state = false;
             //UI.println("Ange 1 -invalid");
             return;
         }
         
-        // theta12 = atan2(yj12 - ym1,xj12-xm1);
+       theta12 = Math.atan2(yj12 - ym1,xj12-xm1);
         double dx2 = xt - xm2; 
         double dy2 = yt - ym2;
         double d2 = ...;
@@ -189,10 +189,10 @@ public class Arm
         
         double h2 = Math.sqrt(r*r - d2*d2/4);
         // elbows positions
-        xj2 = ...;
-        yj2 = ...;
+        xj2 = xa-h*cos(theta);
+        yj2 = ya-h*sin(theta);
         // motor angles for both 1st elbow positions
-        theta2 = ...;
+        theta2 = atan2(yj2-ym2,xj2-xm2);
         if ((theta2>0)||(theta2<-Math.PI)){
             valid_state = false;
             //UI.println("Ange 2 -invalid");

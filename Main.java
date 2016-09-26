@@ -35,6 +35,7 @@ public class Main{
         UI.addButton("Load path XY", this::load_xy);
         UI.addButton("Save path Ang", this::save_ang);
         UI.addButton("Load path Ang:Play", this::load_ang);
+        UI.addButton("Save PWM",this::savePWM);
                 
        // UI.addButton("Quit", UI::quit);
         UI.setMouseMotionListener(this::doMouse);
@@ -48,6 +49,13 @@ public class Main{
         this.run();
         arm.draw();
     }
+ 
+ public void savePWM(){
+ this.tool_path.convert_drawing_to_angles(Drawing drawing,Arm arm);
+ this.tool_path.convert_angles_to_pwm(Arm arm);
+ this.tool_path.save();
+ 
+ }
     
     public void doKeys(String action){
         UI.printf("Key :%s \n", action);

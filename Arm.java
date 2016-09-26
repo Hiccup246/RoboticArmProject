@@ -239,7 +239,7 @@ public class Arm
     // for motor to be in position(angle) theta1
     // linear intepolation
     public int get_pwm1(){
-        int pwm = 0;
+        int pwm = 0;//enter formular and get pwm, remember the angles should be negative and the pwm's positive
         return pwm;
     }
     // ditto for motor 2

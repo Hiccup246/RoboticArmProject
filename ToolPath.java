@@ -56,7 +56,7 @@ public class ToolPath
     }
 
     /**********CONVERT (X,Y) PATH into angles******************/
-    public void convert_drawing_to_angles(Drawing drawing,Arm arm,String fname){
+    public void convert_drawing_to_angles(Drawing drawing,Arm arm){//use to be String fname in parameter
 
         // for all points of the drawing...        
         for (int i = 0;i < drawing.get_drawing_size()-1;i++){ 
@@ -115,9 +115,10 @@ public class ToolPath
         }
     }
     
-    // save file with motor control values
+    //save file with motor control values
     public void save_pwm_file(){
-        ...
+    //... this needs to be coded out 
+     
     }
 
 }

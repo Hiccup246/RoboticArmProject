@@ -53,7 +53,7 @@ public class Main{
  public void savePWM(){
  this.tool_path.convert_drawing_to_angles(Drawing drawing,Arm arm);
  this.tool_path.convert_angles_to_pwm(Arm arm);
- this.tool_path.save();
+ this.tool_path.save_pwm_file();
  
  }
     

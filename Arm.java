@@ -120,7 +120,7 @@ public class Arm
     // calculate tool position from motor angles 
     // updates variable in the class
     public void directKinematic(){
-
+        UI.println("hello");
         // midpoint between joints
         double  xa =xm2+0.5*(xm1-xm2) ;
         double  ya =ym2+0.5*(ym1-ym2) ;
@@ -139,7 +139,7 @@ public class Arm
         } else {
             valid_state = false;
         }
-
+        
     }
 
     // motor angles from tool position
@@ -180,7 +180,7 @@ public class Arm
         theta1 = Math.atan2(yj1-ym1,xj1-xm1);//angle for motor1
         if ((theta1>0)||(theta1<-Math.PI)){
             valid_state = false;
-            //UI.println("Ange 1 -invalid");
+            UI.println("Ange 1 -invalid");
             return;
         }
 
@@ -215,9 +215,13 @@ public class Arm
             //UI.println("Ange 2 -invalid");
             return;
         }
-
         //UI.printf("xt:%3.1f, yt:%3.1f\n",xt,yt);
         //UI.printf("theta1:%3.1f, theta2:%3.1f\n",theta1*180/Math.PI,theta2*180/Math.PI);
+        
+        if(yt>yj2+(0.5*(yj1-yj2))){
+            valid_state = false;
+            return;
+        }
         return;
     }
 
@@ -239,12 +243,12 @@ public class Arm
     // for motor to be in position(angle) theta1
     // linear intepolation
     public int get_pwm1(){
-        int pwm = 0;//enter formular and get pwm, remember the angles should be negative and the pwm's positive
+        int pwm = (int)(-7.23333*(get_theta1()-90))-(int)(75.5);//enter formular and get pwm, remember the angles should be negative and the pwm's positive
         return pwm;
     }
     // ditto for motor 2
     public int get_pwm2(){
-        int pwm =0;
+        int pwm =(int)(-10.017*(get_theta2()-90))-(int)(13.806);
         //pwm = (int)(pwm2_90 + (theta2 - 90)*pwm2_slope);
         return pwm;
     }

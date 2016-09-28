@@ -1,4 +1,4 @@
-package ToWebSite;
+ 
 
 
 /**
@@ -97,7 +97,7 @@ public class Drawing
             OutputStreamWriter osw = new OutputStreamWriter(is);    
             Writer w = new BufferedWriter(osw);
             String str_out; 
-            for (int i = 1; i < path.size() ; i++){
+            for (int i = 0; i < path.size() ; i++){
                 if (path.get(i).get_pen()) {
                   str_out = path.get(i).get_x() +" "+ path.get(i).get_y() +" 1\n";
                 } else {

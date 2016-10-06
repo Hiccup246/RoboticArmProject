@@ -42,7 +42,7 @@ public class ToolPath
     public ToolPath()
     {
         // initialise instance variables
-        n_steps = 50;
+        n_steps = 4;
         theta1_vector = new ArrayList<Double>();
         theta2_vector = new ArrayList<Double>();
         pen_vector = new ArrayList<Integer>();
@@ -68,9 +68,9 @@ public class ToolPath
                 theta1_vector.add(arm.get_theta1()*180/Math.PI);
                 theta2_vector.add(arm.get_theta2()*180/Math.PI);
                 if (p0.get_pen()){ 
-                    pen_vector.add(1);
-                } else {
                     pen_vector.add(0);
+                } else {
+                    pen_vector.add(1);
                 }
             }
         }
@@ -127,7 +127,7 @@ public class ToolPath
             String str_out;
             for (int i = 0; i <  pwm1_vector.size() ; i++){
                 str_out = String.format("%d,%d,%d\n",
-                    pwm1_vector.get(i), pwm2_vector.get(i),pen_vector.get(i));
+                    pwm1_vector.get(i), pwm2_vector.get(i),(1000));//(pen_vector.get(i)*1000)+1000);
                 w.write(str_out);
             }
             w.close();

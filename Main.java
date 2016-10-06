@@ -9,7 +9,11 @@ import ecs100.*;
 import java.util.*;
 import java.io.*;
 import java.awt.*;
-
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.awt.image.DataBufferByte;
 /** <description of class Main>
  */
 public class Main{
@@ -33,6 +37,7 @@ public class Main{
         UI.addButton("Save path Ang", this::save_ang);
         UI.addButton("Load path Ang:Play", this::load_ang);
         UI.addButton("Save PWM",this::savePWM);
+        UI.addButton("Draw Image",this::loadImage);
 
         // UI.addButton("Quit", UI::quit);
         UI.setMouseMotionListener(this::doMouse);
@@ -175,4 +180,63 @@ public class Main{
         Main obj = new Main();
     }    
 
+    
+    public void loadImage(){
+        int tx = 230, ty = 80;
+        File png = new File(UIFileChooser.open("Please choose an File from the list"));
+        //Read hte image
+        BufferedImage img=null;
+        try {
+            img = ImageIO.read(png);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Create a new image, but set it to a single byte gray pallet (using a single byte per pixel)
+        if(img==null)
+            UI.println("img was null");
+
+        BufferedImage newBufferedImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+        newBufferedImage.createGraphics().drawImage(img, 0, 0, Color.WHITE, null);
+        //At this point you no longer care about the color image
+        img = newBufferedImage;
+        //Convert the image to an array of bytes (We know its DataBufferByte and an array of bytes here as we specified above)
+        byte[] pixels = ((DataBufferByte) img.getRaster().getDataBuffer()).getData();
+        //Is the pen currently down / was it before?
+        boolean cur = false, last = false;
+        int dir = 1;
+
+        //Go to the start of the image
+        drawing.add_point_to_path(tx, ty, false);
+        for (int y = 0; y < img.getHeight(); y++) {
+            //Add the current point to the page. Also, factor in the alternating direction
+            drawing.add_point_to_path((dir == 1 ? 0 : img.getWidth()) + tx, y + ty, false);
+            //Alternate direction so that the pen doesn't cross the page
+            for (int x = dir == 1 ? 0 : img.getWidth() - 1; x >= 0 && x < img.getWidth(); x += dir) {
+                cur = pixels[(y * img.getWidth()) + x] >= 0;
+                //We only care when the pixels are different to the last drawn pixel
+                if (cur != last) {
+                    if (cur) {
+                        drawing.add_point_to_path(x + tx, y + ty, true);
+                    } else {
+                        //Remember, if your going from black to white, you want to draw the line to the prev
+                        //pixel, not current, so take dir
+                        drawing.add_point_to_path((x - dir) + tx, y + ty, false);
+                    }
+                }
+                last = cur;
+            }
+            //If your at the end of the page, and the pen was down, we should finish that stroke
+            if (cur && dir == 1) {
+                drawing.add_point_to_path(img.getWidth() + tx, y + ty, true);
+            }
+            if (cur && dir == -1) {
+                drawing.add_point_to_path(tx, y + ty, true);
+            }
+            dir = -dir;
+        }
+    }
+
+    
+    
+    
 }

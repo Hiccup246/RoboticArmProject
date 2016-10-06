@@ -145,6 +145,23 @@ public class Arm
     // motor angles from tool position
     // updetes variables of the class
     public void inverseKinematic(double xt_new,double yt_new){
+        
+        UI.drawLine(270,268,411,268);
+        UI.drawLine(411,268,450,241);
+        UI.drawLine(450,241,531,194);
+        //UI.drawLine(531,194,460,164);
+        //UI.drawLine(460,164,466,128);
+        UI.drawLine(466,128,365,80);
+        UI.drawLine(365,80,293,86);
+        UI.drawLine(293,86,219,110);
+        //UI.drawLine(219,110,219,166);
+       //UI.drawLine(219,166,139,183);
+       UI.drawLine(139,183,277,269);
+       UI.drawLine(277,269,265,268);
+       
+       UI.drawLine(219,110,139,183);
+       UI.drawLine(466,128,531,194);
+        
 
         valid_state = true;
         xt = xt_new;
@@ -163,7 +180,7 @@ public class Arm
         double d1 = Math.sqrt(dx1*dx1+dy1*dy1);//really not sure about this
         
         if (d1>2*r){
-            //UI.println("Arm 1 - can not reach");
+            UI.println("Arm 1 - can not reach");
             valid_state = false;
             return;
         }
@@ -196,7 +213,7 @@ public class Arm
         
         
         if (d2>2*r){
-            //UI.println("Arm 2 - can not reach");
+            UI.println("Arm 2 - can not reach");
             valid_state = false;
             return;
         }
@@ -212,7 +229,7 @@ public class Arm
         theta2 = Math.atan2(yj2-ym2,xj2-xm2);//angle for motor 2
         if ((theta2>0)||(theta2<-Math.PI)){
             valid_state = false;
-            //UI.println("Ange 2 -invalid");
+            UI.println("Ange 2 -invalid");
             return;
         }
         //UI.printf("xt:%3.1f, yt:%3.1f\n",xt,yt);
@@ -220,6 +237,7 @@ public class Arm
         
         if(yt>yj2+(0.5*(yj1-yj2))){
             valid_state = false;
+            UI.println("Warning tool position below midpoint of joints");
             return;
         }
         return;
@@ -243,7 +261,8 @@ public class Arm
     // for motor to be in position(angle) theta1
     // linear intepolation
     public int get_pwm1(){
-        int pwm = (int)(-7.23333*(get_theta1()-90))-(int)(75.5);//enter formular and get pwm, remember the angles should be negative and the pwm's positive
+        int pwm = (int)(-10.154*(get_theta1())+(int)(410.25));//use to be -10
+        //int pwm = (int)(-7.23333*(get_theta1()-90))-(int)(75.5);//enter formular and get pwm, remember the angles should be negative and the pwm's positive
         return pwm;
     }
     // ditto for motor 2
